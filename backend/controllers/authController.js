@@ -4,6 +4,11 @@ const jwt = require('jsonwebtoken');
 
 //registration
 exports.register = async (req,res)=>{
+
+  //   console.log('=== REGISTER ROUTE HIT ===');
+  // console.log('req.body:', req.body);
+  // console.log('Content-Type:', req.headers['content-type'])
+  
 try{
   const {username,email,password} = req.body;
 
@@ -51,11 +56,18 @@ const token =
 );
 
 //send token
-res.status(201).json({token});
+res.status(201).json({
+  token,
+  user: {
+    id: user.id,
+    username: user.username,
+    email: user.email
+  }
+});
 
 }catch(error){
   console.log(error.message);
-  res.status(500).json({msg:'Server Error! '})
+  res.status(500).json({msg:'Server Error!... '})
 }
 };
 
@@ -91,8 +103,15 @@ exports.login = async (req,res)=>{
       {expiresIn: '1h'}
     );
 
-    //send token
-    res.status(200).json({token});
+   //send token
+res.status(200).json({
+  token,
+  user: {
+    id: user.id,
+    username: user.username,
+    email: user.email
+  }
+});
 
   }catch(error){
     console.log(error.message);
