@@ -11,7 +11,7 @@ module.exports = function (req,res,next){
     const tokenPart = token.startsWith('Bearer ') ? token.slice(7) : token;
     const decoded = jwt.verify(tokenPart,process.env.JWT_SECRET);
 
-    req.user = decoded;
+    req.user = decoded.user;
     next();
 
   } catch(error){

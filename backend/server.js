@@ -2,7 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db.js');
+
 const authMiddleware = require('./middlewares/authMiddleware.js');
+const projects = require('./routes/projects.js');
 
 dotenv.config();
 connectDB();
@@ -24,8 +26,10 @@ app.get('/api/test/protected',authMiddleware,(req,res)=>{
 });
 
 
+
 //routes
 app.use('/api/auth/',require('./routes/auth'));
+app.use('/api/projects',projects);
 
 
 const PORT = process.env.PORT || 5000;
