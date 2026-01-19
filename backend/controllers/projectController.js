@@ -125,3 +125,51 @@ exports.getProjects = async (req, res) => {
     res.status(500).json({ message: "Server Error !" });
   }
 };
+
+exports.addMember = async (req, res) => {
+  try {
+    const { userId } = req.body;
+
+    if (!userId) {
+      return res.status(400).json({ msg: 'User ID is required' });
+    }
+
+    const project = await Project.findById(req.params.id);
+
+    if (!project) {
+      return res.status(404).json({ msg: 'Project not found' });
+    }
+
+    // Check if user is the owner
+    if (project.owner.toString() !== req.user.id) {
+      return res.status(403).json({ msg: 'Only project owner can add members' });
+    }
+
+    // Check if user is already a member
+    const isAlreadyMember = project.members.some(
+      member => member.toString() === userId
+    );
+
+    if (isAlreadyMember) {
+      return res.status(400).json({ msg: 'User is already a member' });
+    }
+
+    // Add member
+    project.members.push(userId);
+    await project.save();
+
+    // Return updated project with populated members
+    const updatedProject = await Project.findById(project._id)
+      .populate('owner', 'username email')
+      .populate('members', 'username email');
+
+    res.json(updatedProject);
+
+  } catch (error) {
+    console.error(error.message);
+    if (error.kind === 'ObjectId') {
+      return res.status(404).json({ msg: 'Project not found' });
+    }
+    res.status(500).json({ msg: 'Server error' });
+  }
+};

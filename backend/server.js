@@ -5,6 +5,7 @@ const connectDB = require('./config/db.js');
 
 const authMiddleware = require('./middlewares/authMiddleware.js');
 const projects = require('./routes/projects.js');
+const tasks = require('./routes/tasks');
 
 dotenv.config();
 connectDB();
@@ -30,6 +31,7 @@ app.get('/api/test/protected',authMiddleware,(req,res)=>{
 //routes
 app.use('/api/auth/',require('./routes/auth'));
 app.use('/api/projects',projects);
+app.use('/api', tasks);
 
 
 const PORT = process.env.PORT || 5000;
