@@ -6,8 +6,9 @@ const Dashboard =() =>{
 
   return(
     <>
-
-    <p>HELLO WELCOME TO DASHBOARD!</p>
+        <h1>Dashboard</h1>
+      {user && <p>Welcome, {user.username}!</p>}
+      <button onClick={logout}>Logout</button>
     </>
   )
 }
