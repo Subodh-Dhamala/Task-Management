@@ -1,16 +1,16 @@
-import {useContext} from 'react';
 import  {Navigate} from 'react-router-dom';
-import {AuthContext} from '../context/AuthContext';
+import {useAuth} from '../hooks/useAuth';
 
 const PrivateRoute = ({children}) =>{
-  const {user,loading} = useContext(AuthContext);
 
-  if(loading){
-    return <div>Loading...</div>
+  const {user} = useAuth();
+
+  if(!user){
+    return <Navigate to ='/login' replace/>;
   }
 
-  return user ? children : <Navigate to ='/login' replace/>;
-
+  //if logged in, show the protected content
+  return children;
 };
 
 export default PrivateRoute;

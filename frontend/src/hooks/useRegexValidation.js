@@ -1,4 +1,4 @@
-export const useAuthValidation = () => {
+export const useRegexValidation = () => {
   const USERNAME_REGEX = /^[a-zA-Z0-9]{3,20}$/;
   const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const PASSWORD_REGEX = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;

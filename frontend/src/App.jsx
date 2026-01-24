@@ -1,45 +1,50 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
-import PrivateRoute from './components/PrivateRoute';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Dashboard from './pages/Dashboard';
-import ProjectDetail from './pages/ProjectDetail';
+import { useAuth } from "./hooks/useAuth";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 
-function App(){
-  return(
+//pages
+import Login from "./pages/Auth/Login";
+import Register from "./pages/Auth/Register";
+import Dashboard from "./pages/Dashboard";
+import ProjectDetails from "./pages/ProjectDetails";
+import Error from "./pages/Error";
 
-    <AuthProvider>
-      <Router>
-        <Routes>
-          
-          <Route path='/login' element={<Login/>}/>
-          <Route path ='/register' element={<Register/>}/>
+//components
+import Layout from "./components/Layout";
+import PrivateRoute from "./components/PrivateRoute";
 
-          <Route path='/dashboard' 
-          element={
-          <PrivateRoute>
-            <Dashboard/>
-          </PrivateRoute>}
-          />
+function App() {
+  const { loading } = useAuth();
 
-          <Route path ='/projects/:id'
-          element={
-            <PrivateRoute>
-              <ProjectDetail/>
-            </PrivateRoute>
-          }
-          />
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
-          {/*Default Route*/}
-          <Route path='/' element={
-            <Navigate to='/dashboard'/>
-          }
-          />
+  return (
+    <Router>
+      <Routes>
+        {/*public routes*/}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
-        </Routes>
-      </Router>
-    </AuthProvider>
+        {/*protected routes*/}
+        <Route path ='/' element ={<PrivateRoute> <Layout/> </PrivateRoute>}>
+    
+          <Route index element ={<Navigate to='/dashboard' replace/> }/>
+          <Route path='dashboard' element ={<Dashboard/>}/>
+          <Route path = 'projects/:id' element = {<ProjectDetails/>}/>
+
+        </Route>
+
+        {/*if no route matches*/}
+        <Route path="*" element = {<Error/>}/>
+
+      </Routes>
+    </Router>
   );
 }
 

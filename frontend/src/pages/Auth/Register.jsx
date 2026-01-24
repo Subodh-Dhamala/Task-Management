@@ -1,8 +1,8 @@
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
-import { useAuthValidation } from "../hooks/useAuthValidation";
-import '../styles/auth.css';
+import { AuthContext } from "../../context/AuthContext";
+import { useRegexValidation } from "../../hooks/useRegexValidation";
+import '../../styles/auth.css';
 
 const Register = () => {
   const [username, setUsername] = useState("");
