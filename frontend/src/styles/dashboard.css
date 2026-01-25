@@ -1,125 +1,158 @@
-.dashboard {
-  min-height: 100vh;
-  background: #f9fafb;
-}
+/* dashboard.css */
 
-.dashboard-container {
+.dashboard {
+  padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
 }
 
 .dashboard-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 32px;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 2rem;
 }
 
-.dashboard-title {
-  font-size: 32px;
-  font-weight: 700;
-  color: #111827;
-  margin: 0;
+.dashboard-header h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-header p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
 }
 
 .btn-create {
-  padding: 12px 24px;
-  background: #2563eb;
+  background-color: #3498db;
   color: white;
   border: none;
-  border-radius: 8px;
-  font-weight: 600;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background 0.3s;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  transition: background 0.2s ease;
 }
 
 .btn-create:hover {
-  background: #1d4ed8;
+  background-color: #2980b9;
 }
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
 }
 
-.project-card {
-  background: white;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.project-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.project-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: start;
-  margin-bottom: 12px;
-}
-
-.project-name {
-  font-size: 20px;
-  font-weight: 600;
-  color: #111827;
-  margin: 0;
-}
-
-.btn-delete {
-  padding: 6px 12px;
-  background: #fee2e2;
-  color: #dc2626;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 12px;
-  font-weight: 500;
-  transition: background 0.3s;
-}
-
-.btn-delete:hover {
-  background: #fecaca;
-}
-
-.project-description {
-  color: #6b7280;
-  margin: 12px 0;
-  line-height: 1.5;
-}
-
-.project-date {
-  color: #9ca3af;
-  font-size: 14px;
-}
-
-.loading, .empty-state {
+.loading-text,
+.error-text {
+  font-size: 1.2rem;
   text-align: center;
-  padding: 60px 20px;
-  color: #6b7280;
+  margin-top: 2rem;
 }
 
 .empty-state {
-  background: white;
-  border-radius: 12px;
-  padding: 80px 20px;
+  text-align: center;
+  margin-top: 3rem;
 }
 
-.empty-state h3 {
-  font-size: 20px;
-  color: #374151;
-  margin-bottom: 8px;
+.empty-state h2 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
 }
 
 .empty-state p {
-  color: #9ca3af;
+  font-size: 1rem;
+  color: #555;
+}
+
+/* projectCard.css */
+
+.project-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.project-card-header {
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.project-card-title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.project-card-body {
+  padding: 1rem;
+  flex-grow: 1;
+}
+
+.project-card-description {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.project-card-footer {
+  padding: 0.75rem 1rem;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.project-card-info {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+.project-card-actions button {
+  margin-left: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-primary {
+  background-color: #3498db;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #2980b9;
+}
+
+.btn-danger {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #c0392b;
+}
+
+@media (max-width: 600px) {
+  .dashboard-header {
+    align-items: flex-start;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
 }
