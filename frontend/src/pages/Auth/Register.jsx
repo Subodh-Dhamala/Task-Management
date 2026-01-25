@@ -16,7 +16,7 @@ const Register = () => {
 
   const navigate = useNavigate();
   const { validateUsername, validateEmail, validatePassword } =
-    useAuthValidation();
+    useRegexValidation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
