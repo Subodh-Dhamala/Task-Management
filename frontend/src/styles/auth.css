@@ -1,3 +1,10 @@
+/* Global safety */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 .auth-container {
   min-height: 100vh;
   display: flex;
@@ -7,69 +14,80 @@
   padding: 20px;
 }
 
+/* Card */
 .auth-card {
-  background: white;
+  background: #ffffff;
   padding: 40px;
   border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   width: 100%;
   max-width: 400px;
 }
 
+/* Headings */
 .auth-title {
   font-size: 28px;
-  font-weight: bold;
+  font-weight: 700;
   margin-bottom: 8px;
-  color: #333;
+  color: #111827;
   text-align: center;
 }
 
 .auth-subtitle {
-  color: #666;
+  color: #6b7280;
   text-align: center;
   margin-bottom: 30px;
+  font-size: 14px;
 }
 
+/* Form */
 .form-group {
   margin-bottom: 20px;
 }
 
 .form-label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   font-weight: 500;
-  color: #333;
+  color: #374151;
+  font-size: 14px;
 }
 
 .form-input {
   width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
+  padding: 12px 14px;
+  border: 1px solid #d1d5db;
   border-radius: 8px;
   font-size: 14px;
-  transition: border-color 0.3s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .form-input:focus {
   outline: none;
   border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
+/* Button */
 .btn-primary {
   width: 100%;
   padding: 12px;
   background: #2563eb;
-  color: white;
+  color: #ffffff;
   border: none;
   border-radius: 8px;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.2s, transform 0.1s;
 }
 
-.btn-primary:hover {
+.btn-primary:hover:not(:disabled) {
   background: #1d4ed8;
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: scale(0.98);
 }
 
 .btn-primary:disabled {
@@ -77,19 +95,23 @@
   cursor: not-allowed;
 }
 
+/* Error */
 .error-message {
   background: #fee2e2;
-  color: #dc2626;
+  color: #b91c1c;
   padding: 12px;
   border-radius: 8px;
   margin-bottom: 20px;
   text-align: center;
+  font-size: 14px;
 }
 
+/* Footer */
 .auth-footer {
   text-align: center;
   margin-top: 20px;
-  color: #666;
+  color: #6b7280;
+  font-size: 14px;
 }
 
 .auth-link {
@@ -100,4 +122,15 @@
 
 .auth-link:hover {
   text-decoration: underline;
+}
+
+/* Mobile tweaks */
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 28px 22px;
+  }
+
+  .auth-title {
+    font-size: 24px;
+  }
 }

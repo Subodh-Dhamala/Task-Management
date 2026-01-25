@@ -69,7 +69,7 @@ export const useProjects = () => {
       setLoading(true);
       setError(null);
 
-      await api.delete('/projects/${id}');
+      await api.delete(`/projects/${id}`);
 
       setProjects(projects.filter((project)=> project._id !== id));
 

@@ -1,17 +1,29 @@
-import { useEffect ,useContext} from 'react';
+import { useEffect, useState } from 'react';
 import { useProjects } from '../hooks/useProjects';
 import ProjectCard from '../components/ProjectCard';
+import ProjectForm from '../components/ProjectForm';
 import '../styles/dashboard.css';
-import {AuthContext} from '../context/AuthContext';
 
 const Dashboard = () => {
-  const {user} = useContext(AuthContext);
-  const { projects, loading, error, fetchProjects, deleteProject } = useProjects();
+  const { projects, loading, error, fetchProjects, createProject, deleteProject } = useProjects();
+  const [showForm, setShowForm] = useState(false);
 
+  // Fetch projects when component loads
   useEffect(() => {
     fetchProjects();
   }, []);
 
+  // Handle project creation
+  const handleCreateProject = async (formData) => {
+    try {
+      await createProject(formData.name, formData.description);
+      setShowForm(false); // Close form on success
+    } catch (err) {
+      console.error('Failed to create project:', err);
+    }
+  };
+
+  // Handle project deletion
   const handleDeleteProject = async (id) => {
     try {
       await deleteProject(id);
@@ -20,7 +32,11 @@ const Dashboard = () => {
     }
   };
 
-  if (loading) {
+  const handleButtonClick = () => {
+    setShowForm(true);
+  };
+
+  if (loading && projects.length === 0) {
     return (
       <div className="dashboard">
         <p className="loading-text">Loading projects...</p>
@@ -40,8 +56,12 @@ const Dashboard = () => {
     <div className="dashboard">
       <div className="dashboard-header">
         <h1>My Projects</h1>
-         {user && <p>Welcome, <b>{user.username}</b>!</p>}
-        <button className="btn btn-create">+ New Project</button>
+        <button 
+          className="btn btn-create" 
+          onClick={handleButtonClick}
+        >
+          + New Project
+        </button>
       </div>
 
       {projects.length === 0 ? (
@@ -59,6 +79,13 @@ const Dashboard = () => {
             />
           ))}
         </div>
+      )}
+
+      {showForm && (
+        <ProjectForm
+          onSubmit={handleCreateProject}
+          onCancel={() => setShowForm(false)}
+        />
       )}
     </div>
   );

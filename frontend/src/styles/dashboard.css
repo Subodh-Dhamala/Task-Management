@@ -1,158 +1,110 @@
-/* dashboard.css */
-
-.dashboard {
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;
+/* Global safety */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
+.dashboard {
+  min-height: 100vh;
+  padding: 32px;
+  background: #f9fafb;
+}
+
+/* Header */
 .dashboard-header {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 2rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
 .dashboard-header h1 {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
 }
 
-.dashboard-header p {
-  font-size: 1rem;
-  margin-bottom: 1rem;
+/* Buttons */
+.btn {
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s, transform 0.1s;
 }
 
 .btn-create {
-  background-color: #3498db;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.2s ease;
+  background: #2563eb;
+  color: #ffffff;
 }
 
 .btn-create:hover {
-  background-color: #2980b9;
+  background: #1d4ed8;
 }
 
+.btn-create:active {
+  transform: scale(0.97);
+}
+
+/* Grid */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
 }
 
-.loading-text,
-.error-text {
-  font-size: 1.2rem;
-  text-align: center;
-  margin-top: 2rem;
-}
-
+/* Empty State */
 .empty-state {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 48px 24px;
   text-align: center;
-  margin-top: 3rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
 }
 
 .empty-state h2 {
-  font-size: 1.8rem;
-  margin-bottom: 0.5rem;
+  font-size: 22px;
+  margin-bottom: 8px;
+  color: #111827;
 }
 
 .empty-state p {
-  font-size: 1rem;
-  color: #555;
+  color: #6b7280;
+  font-size: 14px;
 }
 
-/* projectCard.css */
-
-.project-card {
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+/* Loading & Error */
+.loading-text {
+  text-align: center;
+  font-size: 16px;
+  color: #6b7280;
+  margin-top: 60px;
 }
 
-.project-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+.error-text {
+  text-align: center;
+  font-size: 16px;
+  color: #dc2626;
+  margin-top: 60px;
 }
 
-.project-card-header {
-  padding: 1rem;
-  border-bottom: 1px solid #eee;
-}
+/* Responsive */
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 20px;
+  }
 
-.project-card-title {
-  margin: 0;
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-
-.project-card-body {
-  padding: 1rem;
-  flex-grow: 1;
-}
-
-.project-card-description {
-  font-size: 0.95rem;
-  color: #555;
-}
-
-.project-card-footer {
-  padding: 0.75rem 1rem;
-  border-top: 1px solid #eee;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.project-card-info {
-  font-size: 0.85rem;
-  color: #777;
-}
-
-.project-card-actions button {
-  margin-left: 0.5rem;
-  padding: 0.4rem 0.8rem;
-  font-size: 0.85rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.btn-primary {
-  background-color: #3498db;
-  color: white;
-}
-
-.btn-primary:hover {
-  background-color: #2980b9;
-}
-
-.btn-danger {
-  background-color: #e74c3c;
-  color: white;
-}
-
-.btn-danger:hover {
-  background-color: #c0392b;
-}
-
-@media (max-width: 600px) {
   .dashboard-header {
+    flex-direction: column;
     align-items: flex-start;
   }
 
-  .projects-grid {
-    grid-template-columns: 1fr;
+  .dashboard-header h1 {
+    font-size: 24px;
   }
 }

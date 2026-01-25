@@ -17,7 +17,7 @@ const handleLogout = ()=>{
     <nav className="navbar">
       <div className="navbar-container">
         <div className="navbar-brand" onClick={()=>navigate('/dashboard')}>
-          <h2>Bistarai_Bistarai</h2>
+          <h2>Project Management</h2>
         </div>
 
 
