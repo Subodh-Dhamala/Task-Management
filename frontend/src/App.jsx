@@ -32,17 +32,16 @@ function App() {
         <Route path="/register" element={<Register />} />
 
         {/*protected routes*/}
-        <Route path ='/' element ={<PrivateRoute> <Layout/> </PrivateRoute>}>
-    
-          <Route index element ={<Navigate to='/dashboard' replace/> }/>
-          <Route path='dashboard' element ={<Dashboard/>}/>
-          <Route path = 'projects/:id' element = {<ProjectDetails/>}/>
-
+        <Route element={<PrivateRoute />}>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Navigate to="/dashboard" replace />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="projects/:id" element={<ProjectDetails />} />
+          </Route>
         </Route>
 
         {/*if no route matches*/}
-        <Route path="*" element = {<Error/>}/>
-
+        <Route path="*" element={<Error />} />
       </Routes>
     </Router>
   );

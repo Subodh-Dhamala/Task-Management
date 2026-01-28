@@ -1,16 +1,15 @@
-import  {Navigate} from 'react-router-dom';
-import {useAuth} from '../hooks/useAuth';
+import { Navigate, Outlet } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
-const PrivateRoute = ({children}) =>{
+const PrivateRoute = () => {
+  const { user } = useAuth();
 
-  const {user} = useAuth();
-
-  if(!user){
-    return <Navigate to ='/login' replace/>;
+  if (!user) {
+    return <Navigate to="/login" replace />;
   }
 
   //if logged in, show the protected content
-  return children;
+  return <Outlet />;
 };
 
 export default PrivateRoute;

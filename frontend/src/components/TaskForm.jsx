@@ -1,14 +1,19 @@
-import {useState} from 'react';
-import {TASK_STATUS,TASK_PRIORITY} from '../utils/constants';
-import '../styles/taskFrom.css';
+import { useState } from "react";
+import { TASK_STATUS, TASK_PRIORITY } from "../utils/constants";
+import "../styles/taskFrom.css";
 
-const TaskForm = ({ onSubmit, onCancel, initialData = null, isEdit = false }) => {
+const TaskForm = ({
+  onSubmit,
+  onCancel,
+  initialData = null,
+  isEdit = false,
+}) => {
   const [formData, setFormData] = useState({
-    title: initialData?.title || '',
-    description: initialData?.description || '',
+    title: initialData?.title || "",
+    description: initialData?.description || "",
     status: initialData?.status || TASK_STATUS.TODO,
     priority: initialData?.priority || TASK_PRIORITY.MEDIUM,
-    dueDate: initialData?.dueDate || '',
+    dueDate: initialData?.dueDate || "",
   });
 
   const [errors, setErrors] = useState({});
@@ -24,7 +29,7 @@ const TaskForm = ({ onSubmit, onCancel, initialData = null, isEdit = false }) =>
     if (errors[name]) {
       setErrors({
         ...errors,
-        [name]: '',
+        [name]: "",
       });
     }
   };
@@ -33,15 +38,15 @@ const TaskForm = ({ onSubmit, onCancel, initialData = null, isEdit = false }) =>
     const newErrors = {};
 
     if (!formData.title.trim()) {
-      newErrors.title = 'Task title is required';
+      newErrors.title = "Task title is required";
     } else if (formData.title.trim().length < 3) {
-      newErrors.title = 'Task title must be at least 3 characters';
+      newErrors.title = "Task title must be at least 3 characters";
     } else if (formData.title.trim().length > 100) {
-      newErrors.title = 'Task title must be less than 100 characters';
+      newErrors.title = "Task title must be less than 100 characters";
     }
 
     if (formData.description && formData.description.length > 500) {
-      newErrors.description = 'Description must be less than 500 characters';
+      newErrors.description = "Description must be less than 500 characters";
     }
 
     if (formData.dueDate) {
@@ -50,77 +55,81 @@ const TaskForm = ({ onSubmit, onCancel, initialData = null, isEdit = false }) =>
       today.setHours(0, 0, 0, 0);
 
       if (selectedDate < today) {
-        newErrors.dueDate = 'Due date cannot be in the past';
+        newErrors.dueDate = "Due date cannot be in the past";
       }
     }
 
     return newErrors;
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const validationErrors = validate();
-  if (Object.keys(validationErrors).length > 0) {
-    setErrors(validationErrors);
-    return;
-  }
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
 
-  const submitData = {
-    title: formData.title.trim(),
-    description: formData.description.trim(),
-    status: formData.status,
-    priority: formData.priority,
-    dueDate: formData.dueDate || null,
+    const submitData = {
+      title: formData.title.trim(),
+      description: formData.description.trim(),
+      status: formData.status,
+      priority: formData.priority,
+      dueDate: formData.dueDate || null,
+    };
+
+    setLoading(true);
+    try {
+      await onSubmit(submitData);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setLoading(false);
+    }
   };
 
-  setLoading(true);
-  try {
-    await onSubmit(submitData);
-  } catch (error) {
-    console.error('Error submitting form:', error);
-    setLoading(false);
-  }
-};
-
-return (
-  <div className="form-overlay" onClick={onCancel}>
-      <div className="form-container task-form-container" onClick={(e) => e.stopPropagation()}>
+  return (
+    <div className="form-overlay" onClick={onCancel}>
+      <div
+        className="form-container task-form-container"
+        onClick={(e) => e.stopPropagation}
+      >
         <div className="form-header">
-          <h2>{isEdit ? 'Edit Task' : 'Create New Task'}</h2>
+          <h2>{isEdit ? "Edit Task" : "Create New Task"}</h2>
           <button className="close-btn" onClick={onCancel}>
             ✕
           </button>
         </div>
 
         <form onSubmit={handleSubmit}>
-          {/* Title Field */}
           <div className="form-group">
             <label htmlFor="title">
               Task Title <span className="required">*</span>
             </label>
+
             <input
               type="text"
               id="title"
               name="title"
               value={formData.title}
               onChange={handleChange}
-              className={errors.title ? 'input-error' : ''}
+              className={errors.title ? "input-error" : ""}
               placeholder="Enter task title"
               autoFocus
             />
-            {errors.title && <span className="error-message">{errors.title}</span>}
+            {errors.title && (
+              <span className="error-message">{errors.title}</span>
+            )}
           </div>
 
-          {/* Description Field */}
           <div className="form-group">
             <label htmlFor="description">Description</label>
             <textarea
-              id="description"
               name="description"
+              id="description"
               value={formData.description}
               onChange={handleChange}
-              className={errors.description ? 'input-error' : ''}
+              className={errors.description ? "input-error" : ""}
               placeholder="Enter task description (optional)"
               rows="4"
             />
@@ -129,9 +138,7 @@ return (
             )}
           </div>
 
-          {/* Status and Priority Row */}
           <div className="form-row">
-            {/* Status Field */}
             <div className="form-group">
               <label htmlFor="status">
                 Status <span className="required">*</span>
@@ -142,14 +149,13 @@ return (
                 value={formData.status}
                 onChange={handleChange}
               >
-                <option value={TASK_STATUS.TODO}>To Do</option>
-                <option value={TASK_STATUS.IN_PROGRESS}>In Progress</option>
-                <option value={TASK_STATUS.DONE}>Done</option>
+                <option value="{TASK_STATUS.TODO}">To Do</option>
+                <option value="{TASK_STATUS.IN_PROGRESS}">In Progress</option>
+                <option value="{TASK_STATUS.DONE}">Done</option>
               </select>
             </div>
 
-            {/* Priority Field */}
-            <div className="form-group">
+             <div className="form-group">
               <label htmlFor="priority">
                 Priority <span className="required">*</span>
               </label>
@@ -166,8 +172,7 @@ return (
             </div>
           </div>
 
-          {/* Due Date Field */}
-          <div className="form-group">
+            <div className="form-group">
             <label htmlFor="dueDate">Due Date</label>
             <input
               type="date"
@@ -180,8 +185,7 @@ return (
             {errors.dueDate && <span className="error-message">{errors.dueDate}</span>}
           </div>
 
-          {/* Form Actions */}
-          <div className="form-actions">
+      <div className="form-actions">
             <button
               type="button"
               className="btn btn-cancel"
