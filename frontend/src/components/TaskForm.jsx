@@ -92,7 +92,7 @@ const TaskForm = ({
     <div className="form-overlay" onClick={onCancel}>
       <div
         className="form-container task-form-container"
-        onClick={(e) => e.stopPropagation}
+        onClick={(e) => e.stopPropagation()}
       >
         <div className="form-header">
           <h2>{isEdit ? "Edit Task" : "Create New Task"}</h2>
@@ -149,13 +149,13 @@ const TaskForm = ({
                 value={formData.status}
                 onChange={handleChange}
               >
-                <option value="{TASK_STATUS.TODO}">To Do</option>
-                <option value="{TASK_STATUS.IN_PROGRESS}">In Progress</option>
-                <option value="{TASK_STATUS.DONE}">Done</option>
+                <option value={TASK_STATUS.TODO}>To Do</option>  {/* ← FIXED: Removed quotes */}
+                <option value={TASK_STATUS.IN_PROGRESS}>In Progress</option>
+                <option value={TASK_STATUS.DONE}>Done</option>
               </select>
             </div>
 
-             <div className="form-group">
+            <div className="form-group">
               <label htmlFor="priority">
                 Priority <span className="required">*</span>
               </label>
@@ -172,7 +172,7 @@ const TaskForm = ({
             </div>
           </div>
 
-            <div className="form-group">
+          <div className="form-group">
             <label htmlFor="dueDate">Due Date</label>
             <input
               type="date"
@@ -185,7 +185,7 @@ const TaskForm = ({
             {errors.dueDate && <span className="error-message">{errors.dueDate}</span>}
           </div>
 
-      <div className="form-actions">
+          <div className="form-actions">
             <button
               type="button"
               className="btn btn-cancel"

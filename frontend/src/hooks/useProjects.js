@@ -46,12 +46,13 @@ export const useProjects = () => {
       setLoading(true);
       setError(null);
 
-      const response = await api.put("/projects/${id}", data);
+      // FIX: Use backticks for template literal
+      const response = await api.put(`/projects/${id}`, data);
 
       setProjects(
         projects.map((project) =>
-          project._id === id ? response.data : project,
-        ),
+          project._id === id ? response.data : project
+        )
       );
 
       setLoading(false);
@@ -64,22 +65,20 @@ export const useProjects = () => {
     }
   };
 
-  const deleteProject = async (id) =>{
-    try{
+  const deleteProject = async (id) => {
+    try {
       setLoading(true);
       setError(null);
 
       await api.delete(`/projects/${id}`);
 
-      setProjects(projects.filter((project)=> project._id !== id));
+      setProjects(projects.filter((project) => project._id !== id));
 
       setLoading(false);
-    }
-
-    catch(err){
-      setError(err.response?.data?.msg || 'Failed to delete project');
+    } catch (err) {
+      setError(err.response?.data?.msg || "Failed to delete project");
       setLoading(false);
-      console.error('Error deleting project:', err);
+      console.error("Error deleting project:", err);
       throw err;
     }
   };
@@ -92,5 +91,5 @@ export const useProjects = () => {
     createProject,
     updateProject,
     deleteProject,
-};
-};
+  };
+};  // ← THIS CLOSING BRACE WAS MISSING!

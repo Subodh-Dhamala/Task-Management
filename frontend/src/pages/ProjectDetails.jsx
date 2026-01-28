@@ -8,15 +8,15 @@ import { TASK_STATUS } from '../utils/constants';
 import '../styles/projectDetails.css';
 
 const ProjectDetails = () => {
-  const { id } = useParams(); // Get project ID from URL
+  const { id } = useParams();
   const navigate = useNavigate();
 
   // Get project data
-  const { projects, fetchProjects } = useProjects();
+  const { projects, loading: projectsLoading, fetchProjects } = useProjects();
   const project = projects.find(p => p._id === id);
 
   // Get tasks data
-  const { tasks, loading, error, fetchTasks, createTask, updateTask, deleteTask } = useTasks();
+  const { tasks, loading: tasksLoading, error, fetchTasks, createTask, updateTask, deleteTask } = useTasks();
 
   // Local state for form
   const [showTaskForm, setShowTaskForm] = useState(false);
@@ -84,8 +84,8 @@ const ProjectDetails = () => {
     setEditingTask(null);
   };
 
-  // Loading state
-  if (loading && tasks.length === 0) {
+  // Loading state - CHECK BOTH LOADINGS
+  if (projectsLoading || tasksLoading) {
     return (
       <div className="project-details">
         <div className="loading-container">
@@ -196,6 +196,7 @@ const ProjectDetails = () => {
 
         {/* DONE Column */}
         <div className="kanban-column">
+          <div className="kanban-column">
           <div className="column-header done-header">
             <h3>✅ Done</h3>
             <span className="task-count">{doneTasks.length}</span>
@@ -217,6 +218,7 @@ const ProjectDetails = () => {
               ))
             )}
           </div>
+        </div>
         </div>
       </div>
 
