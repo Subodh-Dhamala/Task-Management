@@ -6,17 +6,57 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Check authentication on mount
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const userData = localStorage.getItem('user');
+    const checkAuth = () => {
+      const token = localStorage.getItem('token');
+      const userData = localStorage.getItem('user');
 
-    if (token && userData) {
-      setUser(JSON.parse(userData));
-    }
+      if (token && userData) {
+        try {
+          // Parse user data
+          const parsedUser = JSON.parse(userData);
+          
+          // Check if token is expired
+          const tokenParts = token.split('.');
+          if (tokenParts.length === 3) {
+            // Decode the JWT payload
+            const payload = JSON.parse(atob(tokenParts[1]));
+            
+            // Check expiration (exp is in seconds, Date.now() is in milliseconds)
+            if (payload.exp && payload.exp * 1000 > Date.now()) {
+              // Token is still valid
+              setUser(parsedUser);
+            } else {
+              // Token expired - clear everything
+              console.log('Token expired, clearing storage');
+              localStorage.removeItem('token');
+              localStorage.removeItem('user');
+              setUser(null);
+            }
+          } else {
+            // Invalid token format - clear everything
+            console.log('Invalid token format');
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            setUser(null);
+          }
+        } catch (error) {
+          // Error parsing token or user data - clear everything
+          console.error('Auth check error:', error);
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          setUser(null);
+        }
+      }
 
-    setLoading(false);
+      setLoading(false);
+    };
+
+    checkAuth();
   }, []);
 
+  // Register function
   const register = async (username, email, password) => {
     try {
       const res = await api.post('/auth/register', {
@@ -25,8 +65,10 @@ export const AuthProvider = ({ children }) => {
         password,
       });
 
+      // Save token
       localStorage.setItem('token', res.data.token);
 
+      // Save user data
       if (res.data.user) {
         localStorage.setItem('user', JSON.stringify(res.data.user));
         setUser(res.data.user);
@@ -39,12 +81,15 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Login function
   const login = async (email, password) => {
     try {
       const res = await api.post('/auth/login', { email, password });
 
+      // Save token
       localStorage.setItem('token', res.data.token);
 
+      // Save user data
       if (res.data.user) {
         localStorage.setItem('user', JSON.stringify(res.data.user));
         setUser(res.data.user);
@@ -57,6 +102,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Logout function
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { TASK_STATUS, TASK_PRIORITY } from "../utils/constants";
-import "../styles/taskFrom.css";
+import "../styles/taskForm.css";
 
 const TaskForm = ({
   onSubmit,
